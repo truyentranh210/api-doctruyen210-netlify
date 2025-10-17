@@ -3,7 +3,7 @@ const path = require("path");
 
 exports.handler = async (event) => {
   try {
-    const filename = path.join(__dirname, "../../converted_links.txt");
+    const filename = path.join(__dirname, "converted_links.txt");
     if (!fs.existsSync(filename)) {
       return jsonResponse({ error: "Không tìm thấy file converted_links.txt" }, 404);
     }

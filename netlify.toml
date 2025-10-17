@@ -1,0 +1,9 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/truyen/*"
+  to = "/.netlify/functions/truyen"
+  status = 200
+  force = true

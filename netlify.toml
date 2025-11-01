@@ -2,8 +2,16 @@
   functions = "netlify/functions"
   publish = "."
 
+# 🔹 Route chính /truyen/*
 [[redirects]]
   from = "/truyen/*"
+  to = "/.netlify/functions/truyen"
+  status = 200
+  force = true
+
+# 🏠 Route /home — hiển thị hướng dẫn API
+[[redirects]]
+  from = "/home"
   to = "/.netlify/functions/truyen"
   status = 200
   force = true

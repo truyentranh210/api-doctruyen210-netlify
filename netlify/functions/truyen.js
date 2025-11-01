@@ -21,7 +21,10 @@ async function loadData() {
       if (!line) continue;
 
       // Nếu là tiêu đề
-      if (line.toLowerCase().startsWith("đọc-truyện-hentai") || line.toLowerCase().startsWith("doc-truyen-hentai")) {
+      if (
+        line.toLowerCase().startsWith("đọc-truyện-hentai") ||
+        line.toLowerCase().startsWith("doc-truyen-hentai")
+      ) {
         currentTitle = line;
         data[currentTitle] = [];
       }
@@ -70,6 +73,29 @@ exports.handler = async (event) => {
     const reqPath = event.path;
     const parts = reqPath.split("/").filter(Boolean);
 
+    // 🏠 Trang /home - hướng dẫn API tổng quan
+    if (reqPath === "/home") {
+      return jsonResponse({
+        project: "📚 API Truyện Netlify",
+        author: "truyentranh210",
+        version: "1.0.0",
+        updated: new Date().toISOString(),
+        description:
+          "API đọc truyện hentai lưu trên Catbox. Có thể xem toàn bộ truyện hoặc truyện riêng theo slug.",
+        endpoints: {
+          "/home": "Hiển thị hướng dẫn API tổng quan",
+          "/truyen": "Trang chủ API, hiển thị hướng dẫn nhanh",
+          "/truyen/all": "Trả về toàn bộ danh sách truyện và link ảnh",
+          "/truyen/<slug>": "Trả về chi tiết link ảnh của một truyện cụ thể",
+        },
+        examples: [
+          "https://tên-project.netlify.app/truyen/all",
+          "https://tên-project.netlify.app/truyen/Arlecchino",
+          "https://tên-project.netlify.app/truyen/MISATO-X-SHINJI",
+        ],
+      });
+    }
+
     // 🏠 Trang chủ
     if (reqPath === "/" || reqPath === "/truyen") {
       return jsonResponse({
@@ -77,6 +103,7 @@ exports.handler = async (event) => {
         routes: {
           "/truyen/all": "Toàn bộ truyện và link ảnh",
           "/truyen/<slug>": "Xem link ảnh của truyện cụ thể",
+          "/home": "Hướng dẫn tổng quan API",
         },
         example: ["/truyen/Arlecchino", "/truyen/MISATO-X-SHINJI"],
       });
